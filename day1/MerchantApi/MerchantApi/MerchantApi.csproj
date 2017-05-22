@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Data\ProductData.cs" />
     <Compile Include="Data\ProductOperation.cs" />
+    <Compile Include="Interface\IData.cs" />
     <Compile Include="Interface\IProductOperation.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

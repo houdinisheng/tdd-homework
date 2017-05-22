@@ -1,9 +1,12 @@
-﻿namespace MerchantApi.Interface
+﻿using MerchantApi.Models;
+using System.Collections.Generic;
+
+namespace MerchantApi.Interface
 {
     public interface IProductOperation
     {
-        int GetProductsTotalCost(string[] productIds);
+        int[] GetProductsTotalCost(IList<Product> products, int groupCount);
 
-        int GetProductsTotalRevenue(string[] productIds);
+        int[] GetProductsTotalRevenue(IList<Product> products, int groupCount);
     }
 }

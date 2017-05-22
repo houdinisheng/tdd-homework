@@ -1,54 +1,35 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using MerchantApi.Interface;
+using MerchantApi.Data;
 
 namespace MerchantApi.Services.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ProductServicesTests
     {
-        private readonly IProductOperation _operation;
-
-        public ProductServicesTests()
+        [TestMethod]
+        public void Can_Get_Products_Total_Cost()
         {
-            this._operation= Substitute.For<IProductOperation>();
+            var groupCount = 3;
+            var expected = new int[] { 6, 15, 24, 21 };
+            
+            var target = new ProductServices();
+            var actual = target.GetProductsTotalCost(groupCount);
+
+            CollectionAssert.AreEqual(expected, actual);
         }
 
-        [DataTestMethod()]
-        [DataRow("1,2,3", 6)]
-        [DataRow("4,5,6", 15)]
-        [DataRow("7,8,9", 24)]
-        [DataRow("10,11", 21)]
-        public void Can_Get_Products_Total_Cost(string ids, int expected)
+        [TestMethod]
+        public void Can_Get_Products_Total_Revenue()
         {
-            string[] productIds = GetProductIds(ids);
-            _operation.GetProductsTotalCost(productIds).Returns(expected);
+            var groupCount = 4;
+            var expected = new int[] { 50, 66, 60 };
+            
+            var target = new ProductServices();
+            var actual = target.GetProductsTotalRevenue(groupCount);
 
-            var target = new ProductServices(_operation);
-            var actual = target.GetProductsTotalCost(productIds);
-
-            Assert.AreEqual(expected, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
-
-        [DataTestMethod()]
-        [DataRow("1,2,3,4", 50)]
-        [DataRow("5,6,7,8", 66)]
-        [DataRow("9,10,11", 60)]
-        public void Can_Get_Products_Total_Revenue(string ids, int expected)
-        {
-            var productIds = GetProductIds(ids);
-            _operation.GetProductsTotalRevenue(productIds).Returns(expected);
-
-            var target = new ProductServices(_operation);
-            var actual = target.GetProductsTotalRevenue(productIds);
-
-            Assert.AreEqual(expected, actual);
-        }
-        
-        private static string[] GetProductIds(string ids)
-        {
-            return ids.Split(',');
-        }
-
     }
 }
