@@ -12,7 +12,10 @@ namespace BookStore
 
         public decimal GetTotalPrice<T>(T[] books) where T : IBook
         {
-            var quantities = books.Select(b => b.Quantity).ToArray();
+            var quantities = (from b in books
+                              group b by b.Episode into g
+                              select g.Sum(b => b.Quantity)).ToArray();
+
             var levels = GetDiscountLevels(quantities);
             return GetTotalPrice(books, levels);
         }
