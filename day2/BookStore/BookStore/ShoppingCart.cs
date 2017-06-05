@@ -27,8 +27,11 @@ namespace BookStore
                 for (var i = 0; i < books.Length; i++)
                 {
                     var book = books[i];
-                    total += book.Price * discount;
-                    book.Quantity -= 1;
+                    if (book.Quantity > 0)
+                    {
+                        total += book.Price * discount;
+                        book.Quantity -= 1;
+                    }
                 }
             }
 
@@ -57,7 +60,7 @@ namespace BookStore
                     break;
 
                 default:
-                    discount = 0;
+                    discount = 1;
                     break;
             }
             return discount;
@@ -65,18 +68,20 @@ namespace BookStore
 
         private void GetDiscountLevels(List<int> levels, int[] quanties)
         {
+            var level = 0;
             for (var i = 0; i < quanties.Length; i++)
             {
                 var qty = quanties[i];
-                var level = 0;
+                
                 if (qty > 1)
                 {
                     level++;
                 }
-                levels.Add(level);
+                
                 quanties[i] -= 1;
             }
 
+            levels.Add(level);
             if (quanties.Any(q => q > 0))
             {
                 GetDiscountLevels(levels, quanties);
