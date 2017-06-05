@@ -43,19 +43,19 @@ namespace BookStore
             decimal discount;
             switch (level)
             {
-                case 1:
+                case 2:
                     discount = 0.95m;
                     break;
 
-                case 2:
+                case 3:
                     discount = 0.9m;
                     break;
 
-                case 3:
+                case 4:
                     discount = 0.8m;
                     break;
 
-                case 4:
+                case 5:
                     discount = 0.75m;
                     break;
 
@@ -73,7 +73,7 @@ namespace BookStore
             {
                 var qty = quanties[i];
                 
-                if (qty > 1)
+                if (qty >= 1)
                 {
                     level++;
                 }
