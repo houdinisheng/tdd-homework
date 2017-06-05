@@ -13,8 +13,7 @@ namespace BookStore
         public decimal GetTotalPrice<T>(T[] books) where T : IBook
         {
             var quanties = books.Select(b => b.Quantity).ToArray();
-            var levels = new List<int>();
-            GetDiscountLevels(levels, quanties);
+            var levels = GetDiscountLevels(quanties);
             return GetTotalPrice(books, levels);
         }
 
@@ -63,29 +62,32 @@ namespace BookStore
                     discount = 1;
                     break;
             }
+
             return discount;
         }
 
-        private void GetDiscountLevels(List<int> levels, int[] quanties)
+        private List<int> GetDiscountLevels(int[] quanties)
         {
-            var level = 0;
-            for (var i = 0; i < quanties.Length; i++)
+            var levels = new List<int>();
+            while (quanties.Any(q => q > 0))
             {
-                var qty = quanties[i];
-                
-                if (qty >= 1)
+                var level = 0;
+                for (var i = 0; i < quanties.Length; i++)
                 {
-                    level++;
+                    var qty = quanties[i];
+
+                    if (qty >= 1)
+                    {
+                        level++;
+                    }
+
+                    quanties[i] -= 1;
                 }
-                
-                quanties[i] -= 1;
+
+                levels.Add(level);
             }
 
-            levels.Add(level);
-            if (quanties.Any(q => q > 0))
-            {
-                GetDiscountLevels(levels, quanties);
-            }
+            return levels;
         }
     }
 }
