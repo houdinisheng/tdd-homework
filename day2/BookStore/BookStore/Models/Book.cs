@@ -1,17 +1,17 @@
-﻿using System;
+﻿using BookStore.Interfaces;
 
 namespace BookStore.Models
 {
     public class Book : IBook
     {
-        private string bookName;
+        private string name;
+        private int qty;
         private int episode;
         private int price;
-        private int qty;
 
-        public Book(string bookName, int episode, int price, int qty)
+        public Book(string name, int episode, int price, int qty)
         {
-            this.bookName = bookName;
+            this.name = name;
             this.episode = episode;
             this.price = price;
             this.qty = qty;
@@ -19,34 +19,23 @@ namespace BookStore.Models
 
         int IBook.Episode
         {
-            get
-            {
-                return episode;
-            }
+            get { return episode; }
         }
 
         string IBook.Name
         {
-            get
-            {
-                return bookName;
-            }
+            get { return name; }
         }
 
-        int IBook.Price
+        decimal IBook.Price
         {
-            get
-            {
-                return price;
-            }
+            get { return price; }
         }
 
         int IBook.Quantity
         {
-            get
-            {
-                return qty;
-            }
+            get { return qty; }
+            set { qty = value; }
         }
     }
 }

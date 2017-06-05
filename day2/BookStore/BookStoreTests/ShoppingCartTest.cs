@@ -1,4 +1,5 @@
 ﻿using BookStore;
+using BookStore.Interfaces;
 using BookStore.Models;
 using FluentAssertions;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace BookStoreTest
         [TestCase(1, 2, 2, 0, 0, 460)]
         public void Should_Get_Correct_Price_Of_HarryPotter_Books(
             int firstEpisodeCount, int secondEpisodeCount, int thirdEpisodeCount, 
-            int fourthEpisodeCount, int fifthEpisodeCount, int expected)
+            int fourthEpisodeCount, int fifthEpisodeCount, decimal expected)
         {
             var bookName = "Harry Potter";
 

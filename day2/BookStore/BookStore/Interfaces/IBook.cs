@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace BookStore.Interfaces
+﻿namespace BookStore.Interfaces
 {
     public interface IBook
     {
-
+        string Name { get; }
+        int Episode { get; }
+        decimal Price { get; }
+        int Quantity { get; set; }
     }
 }
