@@ -6,8 +6,17 @@ namespace BookStore
 {
     public class ShoppingCart
     {
+        private readonly Dictionary<int, decimal> _discount;
+
         public ShoppingCart()
         {
+            _discount = new Dictionary < int, decimal>
+            {
+                { 2, 0.95m },
+                { 3, 0.9m },
+                { 4, 0.8m  },
+                {5,0.75m }
+            };
         }
 
         public decimal GetTotalPrice<T>(T[] books) where T : IBook
@@ -26,13 +35,17 @@ namespace BookStore
             foreach (var level in levels)
             {
                 var discount = GetDiscount(level);
+                var bookCount = 0;
                 for (var i = 0; i < books.Length; i++)
                 {
                     var book = books[i];
                     if (book.Quantity > 0)
                     {
-                        total += book.Price * discount;
+                        ++bookCount;
+                        var price = (bookCount <= level) ? book.Price* discount : book.Price;
+                        total += price;
                         book.Quantity -= 1;
+
                     }
                 }
             }
@@ -43,30 +56,7 @@ namespace BookStore
         private decimal GetDiscount(int level)
         {
             decimal discount;
-            switch (level)
-            {
-                case 2:
-                    discount = 0.95m;
-                    break;
-
-                case 3:
-                    discount = 0.9m;
-                    break;
-
-                case 4:
-                    discount = 0.8m;
-                    break;
-
-                case 5:
-                    discount = 0.75m;
-                    break;
-
-                default:
-                    discount = 1;
-                    break;
-            }
-
-            return discount;
+            return _discount.TryGetValue(level, out discount) ? discount : 1m;
         }
 
         private List<int> GetDiscountLevels(int[] quantities)

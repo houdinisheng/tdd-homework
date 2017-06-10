@@ -17,6 +17,9 @@ namespace BookStoreTest
         [TestCase(1, 1, 1, 1, 1, 375)]
         [TestCase(1, 1, 2, 0, 0, 370)]
         [TestCase(1, 2, 2, 0, 0, 460)]
+        [TestCase(2, 2, 1, 0, 0, 460)]
+        [TestCase(2, 2, 0, 1, 1, 510)]
+        [TestCase(0, 0, 0, 0, 0, 0)]
         public void Should_Get_Correct_Price_Of_HarryPotter_Books(
             int firstEpisodeCount, int secondEpisodeCount, int thirdEpisodeCount, 
             int fourthEpisodeCount, int fifthEpisodeCount, decimal expected)
